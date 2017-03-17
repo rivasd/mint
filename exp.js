@@ -91,6 +91,9 @@ function runExperiment(){
 				function findStim(list, folder, version){
 					//go through the given list, find the urls that contain the two markers, and build a timeline just with them
 					var trials = [];
+					
+					version = "_v"+version;
+					
 					list.forEach(function(url){
 						if(url.includes(folder) && url.includes(version)){ //DONT MIX MP3 and MP4 in the same folder!!!!
 							//add one object per found url
