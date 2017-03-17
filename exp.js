@@ -111,7 +111,7 @@ function runExperiment(){
 				var subblocks = [];
 				for(var i=0;i < 5; i++){
 					
-					var type = i>3 ? 'video': ' audio-categorization';
+					var type = i>3 ? 'video': 'audio-categorization';
 					subblocks.push({
 						type: type,
 						timeline: findStim( type == 'video' ? settings.resources.video : settings.resources.audio, folder[i], version)
