@@ -45,7 +45,7 @@ function runExperiment(){
 				settings.resources.video.forEach(function(url){ //! adds one trial per file that has muscheck in its URL
 					if(url.includes('muscheck')){
 						subtimeline.push({
-							stimulus: url,
+							sources: [url],
 							type: 'video',
 							key_answer: isMatch(url) ? 'q' : 'p'
 						});
@@ -72,7 +72,7 @@ function runExperiment(){
 				settings.resources.video.forEach(function(url){ //! adds one trial per file that has noisedemo in its URL
 					if(url.includes('noisedemo')){
 						noisetimeline.push({
-							stimulus: url,
+							sources: [url],
 							type: 'video',
 							key_answer: isMatch(url) ? 'q' : 'p'
 						});
@@ -89,26 +89,28 @@ function runExperiment(){
 				
 				//returns a timeline of the correct stimuli given a folder and a version code
 				function findStim(list, folder, version){
-					
+					//go through the given list, find the urls that contain the two markers, and build a timeline just with them
 					var trials = [];
 					list.forEach(function(url){
 						if(url.includes(folder) && url.includes(version)){ //DONT MIX MP3 and MP4 in the same folder!!!!
+							//add one object per found url
 							trials.push({
 								stimulus : url,
-								key_answer: isMatch(url) ? 'q' : 'p'
+								sources : [url],
+								key_answer: isMatch(url) ? 'q' : 'p' //attach the correct key according to our helper function above
 							});
 						}
 					})
 					
-					trials = jsPsych.randomization.shuffle(trials);
+					trials = jsPsych.randomization.shuffle(trials); // shuffle before returning
 					return trials;
 				}
 				
 				
-				
+				//associates a number (array index position) with a folder name
 				var folder = ['pitch', 'rythm', 'predict', 'spatial', 'visual'];
 				
-				var subblocks = [];
+				var subblocks = []; // medium level timeline which contains the 5 blocks
 				for(var i=0;i < 5; i++){
 					
 					var type = i>3 ? 'video': 'audio-categorization';
